@@ -19,10 +19,9 @@
 
   <br/><br/>
 
-  <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white" alt="HTML5">
-  <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white" alt="CSS3">
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white" alt="HTML">
+  <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white" alt="CSS">
   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" alt="JavaScript">
-  <img src="https://img.shields.io/badge/MIT_License-FFD700?style=flat-square&logo=opensourceinitiative&logoColor=black" alt="MIT">
 
 </div>
 
@@ -40,29 +39,12 @@
 
 <br>
 
-## 🚀 Живой сайт
-
-👉 **[https://landing-enjoyer.vercel.app](https://landing-enjoyer.vercel.app)**
-
-<br>
-
 ## 🛠️ Что уже умею
 
-- HTML5 & семантическая вёрстка  
+- HTML & семантическая вёрстка  
 - CSS (Flexbox, Grid, адаптив, медиа-запросы)  
 - JavaScript (базовый + DOM, события)  
 - Git & GitHub  
 - Работа с Vercel / Netlify  
 - Основы MySQL / SQL  
 - Python (начальный уровень)
-
-<br>
-
-## 📂 Структура проекта
-landing-enjoyer/
-├── css/           # стили
-├── images/        # картинки и иконки
-├── index.html     # главная страница
-├── script.js      # скрипты
-├── LICENSE        # MIT
-└── README.md
