@@ -1,3 +1,13 @@
+.project-screenshot {
+    display: block;
+    max-inline-size: 100%;
+    block-size: auto;
+    margin-block: 1.1rem 1.2rem;
+    border-radius: var(--radius-md);
+    box-shadow: 0 0.5rem 2rem hsl(220 40% 10% / 32%);
+    border: 0.0625rem solid var(--border);
+    background: hsl(223 30% 16%);
+}
 :root {
     --bg: hsl(223 47% 7%);
     --bg-soft: hsl(223 30% 12%);
