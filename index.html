@@ -6,110 +6,130 @@
     <meta name="author" content="Dmitry Enjoyer">
     <meta name="description" content="Портфолио веб-разработчика Dmitry Enjoyer">
     <meta name="keywords" content="веб-разработка,html,css,javascript,портфолио">
+    <meta name="theme-color" content="#0f172a">
     <title>Enjoyer - Веб-разработчик</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
     <link rel="icon" href="images/icon.png" type="image/png">
 </head>    
 <body>
-    <!-- Хедер с навигацией -->
+    <a class="skip-link" href="#main-content">Перейти к контенту</a>
+
     <header class="header">
         <div class="container">
-            <div class="logo">
+            <a class="logo" href="#main-content" aria-label="На главный экран">
                 <span class="logo-text">Enjoyer</span>
-                <img src="images/icon.png" alt="Logo" class="logo-icon" id="runawayIcon">
-            </div>
-            <nav class="nav">
-                <a href="#about">Обо мне</a>
-                <a href="#stack">Стек</a>
-                <a href="#skills">Навыки</a>
-                <a href="#contact">Контакты</a>
+                <img src="images/icon.png" alt="Логотип Enjoyer" class="logo-icon" id="runawayIcon" loading="lazy" decoding="async">
+            </a>
+            <nav class="nav" aria-label="Основная навигация">
+                <ul class="nav-list">
+                    <li><a href="#about">Обо мне</a></li>
+                    <li><a href="#stack">Стек</a></li>
+                    <li><a href="#skills">Навыки</a></li>
+                    <li><a href="#projects">Проекты</a></li>
+                    <li><a href="#contact">Контакты</a></li>
+                </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Главная секция -->
-    <section class="hero">
-        <div class="container">
-            <h1 title="Я нуб ебаный пока что">Я веб-разработчик</h1>
-            <p title="Приветик сладкий">Но пока что только начинающий, только встал на путь истинный</p>
-        </div>
-    </section>
-
-    <!-- Секция "Обо мне" -->
-    <section id="about" class="about">
-        <div class="container">
-            <h2>Обо мне</h2>
-            <p><b>Привет! Я начинающий веб-разработчик из Новосибирска, студент с энтузиазмом познать все про веб-разработку. Постоянно учусь и развиваюсь в этой сфере.</b></p>
-            <p><b>В будущем хочу на этом зарабатывать себе на еду.</b></p>
-        </div>
-    </section>
-
-    <!-- Секция "Мой стек" -->
-    <section id="stack" class="stack">
-        <div class="container">
-            <h2>Мой стек будет пополняться со временем</h2>
-            <div class="stack-scroll">
-                <div class="stack-card">
-                    <div class="card-icon">📱</div>
-                    <h3>HTML</h3>
-                </div>
-                <div class="stack-card">
-                    <div class="card-icon">🎨</div>
-                    <h3>CSS</h3>
-                </div>
-                <div class="stack-card">
-                    <div class="card-icon">⚙️</div>
-                    <h3>JavaScript</h3>
-                </div>
-                <div class="stack-card">
-                    <div class="card-icon">🗄️</div>
-                    <h3>MySQL</h3>
-                </div>
-                <div class="stack-card">
-                    <div class="card-icon">📦</div>
-                    <h3>SQL</h3>
-                </div>
-                <div class="stack-card">
-                    <div class="card-icon">🔧</div>
-                    <h3>Git</h3>
-                </div>
-                <div class="stack-card">
-                    <div class="card-icon">🎯</div>
-                    <h3>Python</h3>
+    <main id="main-content">
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="container">
+                <p class="eyebrow">Frontend Developer • Novosibirsk</p>
+                <h1 id="hero-title">Создаю быстрые и эстетичные веб-интерфейсы</h1>
+                <p>Начинающий разработчик с фокусом на чистый код, UX и продуманные микровзаимодействия.</p>
+                <div class="hero-actions">
+                    <a class="button button-ghost" href="#projects">Смотреть проекты</a>
+                    <a class="button" href="#contact">Связаться</a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Секция "Что я могу" -->
-    <section id="skills" class="skills">
-        <div class="container">
-            <h2>Что я могу</h2>
-            <ul class="skills-list">
-                <li>HTML</li>
-                <li>CSS</li>
-            </ul>
-        </div>
-    </section>
-
-    <!-- Секция контактов -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2>Давайте работать вместе!</h2>
-            <p>Связь со мной:</p>
-            <div class="contact-links">
-                <a href="mailto:enjoyerfuture@proton.me" class="button" onclick="
-                    navigator.clipboard.writeText('enjoyerfuture@proton.me'); 
-                    this.textContent='Скопировано!'; 
-                    setTimeout(()=>this.textContent='Email',1500); 
-                    return false;">
-                Email
-                </a>
-                <a href="https://t.me/dimonich0" target="_blank" class="button">Telegram</a>
-                <a href="https://github.com/enjoyeeer0" target="_blank" class="button">GitHub</a>
+        <section id="about" class="about" aria-labelledby="about-title">
+            <div class="container">
+                <h2 id="about-title">Обо мне</h2>
+                <p>Привет! Я начинающий веб-разработчик из Новосибирска. Углубляюсь в HTML, CSS и JavaScript, прокачиваю практику на реальных мини-проектах и ежедневно улучшаю качество кода.</p>
+                <p>Моя цель — создавать полезные продукты, которыми приятно пользоваться и легко поддерживать в продакшене.</p>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <section id="stack" class="stack" aria-labelledby="stack-title">
+            <div class="container">
+                <h2 id="stack-title">Технологический стек</h2>
+                <p class="section-subtitle">Стек расширяется по мере роста сложности проектов.</p>
+                <div class="stack-scroll" role="list" aria-label="Список технологий">
+                    <article class="stack-card" role="listitem">
+                        <span class="card-icon" aria-hidden="true">📱</span>
+                        <h3>HTML</h3>
+                    </article>
+                    <article class="stack-card" role="listitem">
+                        <span class="card-icon" aria-hidden="true">🎨</span>
+                        <h3>CSS</h3>
+                    </article>
+                    <article class="stack-card" role="listitem">
+                        <span class="card-icon" aria-hidden="true">⚙️</span>
+                        <h3>JavaScript</h3>
+                    </article>
+                    <article class="stack-card" role="listitem">
+                        <span class="card-icon" aria-hidden="true">🗄️</span>
+                        <h3>MySQL</h3>
+                    </article>
+                    <article class="stack-card" role="listitem">
+                        <span class="card-icon" aria-hidden="true">📦</span>
+                        <h3>SQL</h3>
+                    </article>
+                    <article class="stack-card" role="listitem">
+                        <span class="card-icon" aria-hidden="true">🔧</span>
+                        <h3>Git</h3>
+                    </article>
+                    <article class="stack-card" role="listitem">
+                        <span class="card-icon" aria-hidden="true">🎯</span>
+                        <h3>Python</h3>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="skills" aria-labelledby="skills-title">
+            <div class="container">
+                <h2 id="skills-title">Что я могу</h2>
+                <ul class="skills-list">
+                    <li>Верстаю адаптивные интерфейсы на HTML5 + CSS</li>
+                    <li>Пишу интерактив на чистом JavaScript без лишних зависимостей</li>
+                    <li>Следую принципам доступности и производительности</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="projects" class="projects" aria-labelledby="projects-title">
+            <div class="container">
+                <h2 id="projects-title">Мои проекты</h2>
+                <p class="section-subtitle">Небольшая коллекция полезных веб-приложений.</p>
+                <article class="project-card" aria-labelledby="project-password-title">
+                    <div class="project-badge" aria-hidden="true">Featured</div>
+                    <h3 id="project-password-title">Security Password</h3>
+                    <p>Сервис генерации надежных паролей с гибкими параметрами сложности для безопасной работы в сети.</p>
+                    <a class="button" href="https://securitypassword-puce.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Открыть проект Security Password в новой вкладке">Открыть проект</a>
+                </article>
+            </div>
+        </section>
+
+        <section id="contact" class="contact" aria-labelledby="contact-title">
+            <div class="container">
+                <h2 id="contact-title">Давайте работать вместе</h2>
+                <p>Связь со мной:</p>
+                <div class="contact-links">
+                    <button type="button" class="button" data-copy-email="enjoyerfuture@proton.me">Email</button>
+                    <a href="https://t.me/dimonich0" target="_blank" rel="noopener noreferrer" class="button">Telegram</a>
+                    <a href="https://github.com/enjoyeeer0" target="_blank" rel="noopener noreferrer" class="button">GitHub</a>
+                </div>
+                <p class="visually-hidden" id="copyStatus" aria-live="polite"></p>
+            </div>
+        </section>
+    </main>
 
     <script src="script.js"></script>
 </body>

@@ -1,94 +1,165 @@
-// Плавная навигация
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({ behavior: 'smooth' });
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener('click', (event) => {
+        const href = anchor.getAttribute('href');
+
+        if (!href || href === '#') {
+            return;
         }
+
+        const target = document.querySelector(href);
+        if (!target) {
+            return;
+        }
+
+        event.preventDefault();
+        target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
     });
 });
 
-// Убегающая иконка в хедере
-const runawayIcon = document.getElementById('runawayIcon');
+const emailButton = document.querySelector('[data-copy-email]');
+const copyStatus = document.getElementById('copyStatus');
 
-if (runawayIcon) {
+if (emailButton && copyStatus) {
+    const defaultText = emailButton.textContent;
+
+    emailButton.addEventListener('click', async () => {
+        const email = emailButton.getAttribute('data-copy-email');
+
+        if (!email) {
+            return;
+        }
+
+        try {
+            await navigator.clipboard.writeText(email);
+            emailButton.textContent = 'Скопировано!';
+            copyStatus.textContent = 'Email адрес скопирован в буфер обмена.';
+        } catch {
+            window.location.href = `mailto:${email}`;
+            copyStatus.textContent = 'Открыт почтовый клиент для отправки письма.';
+        }
+
+        window.setTimeout(() => {
+            emailButton.textContent = defaultText;
+        }, 1500);
+    });
+}
+
+const runawayIcon = document.getElementById('runawayIcon');
+const pointerFine = window.matchMedia('(pointer: fine)').matches;
+
+if (runawayIcon && !prefersReducedMotion && pointerFine) {
     let distance = 0;
     let angle = 0;
-    
-    document.addEventListener('mousemove', (e) => {
+
+    document.addEventListener('pointermove', (event) => {
         const rect = runawayIcon.getBoundingClientRect();
-        const dx = e.clientX - (rect.left + rect.width / 2);
-        const dy = e.clientY - (rect.top + rect.height / 2);
-        const distToMouse = Math.sqrt(dx * dx + dy * dy);
-        
-        if (distToMouse < 80) {
-            angle = Math.atan2(dy, dx) + Math.PI;
-            distance = 30;
+        const deltaX = event.clientX - (rect.left + rect.width / 2);
+        const deltaY = event.clientY - (rect.top + rect.height / 2);
+        const distanceToPointer = Math.hypot(deltaX, deltaY);
+
+        if (distanceToPointer < 4.5 * 16) {
+            angle = Math.atan2(deltaY, deltaX) + Math.PI;
+            distance = 1.8;
         } else {
-            distance *= 0.9;
+            distance *= 0.88;
         }
-        
-        runawayIcon.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(${1 + distance / 50})`;
+
+        runawayIcon.style.transform = `translate(${Math.cos(angle) * distance}rem, ${Math.sin(angle) * distance}rem) scale(${1 + distance / 8})`;
     });
-    
-    document.addEventListener('mouseleave', () => {
+
+    document.addEventListener('pointerleave', () => {
         distance = 0;
         runawayIcon.style.transform = 'translate(0, 0) scale(1)';
     });
 }
 
-// Бесконечный скролл карточек стека
 const stackScroll = document.querySelector('.stack-scroll');
 
 if (stackScroll) {
-    const originalCards = Array.from(stackScroll.querySelectorAll('.stack-card'));
-    
-    // Дублируем карточки
-    for (let i = 0; i < originalCards.length * 2; i++) {
-        stackScroll.appendChild(originalCards[i % originalCards.length].cloneNode(true));
-    }
-    
-    let isScrolling = false;
-    let startPos = 0;
-    let scrollPos = 0;
-    
-    const resetPosition = () => {
-        const scrollWidth = stackScroll.scrollWidth;
-        const singleSetWidth = scrollWidth / 3;
-        const pos = stackScroll.scrollLeft;
-        
-        if (pos > singleSetWidth * 1.5) {
-            stackScroll.scrollLeft = pos - singleSetWidth;
-        } else if (pos < singleSetWidth * 0.5) {
-            stackScroll.scrollLeft = pos + singleSetWidth;
+    const originalCards = Array.from(stackScroll.children);
+
+    originalCards.forEach((card) => {
+        const clone = card.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        stackScroll.append(clone);
+    });
+
+    let isPointerDown = false;
+    let startX = 0;
+    let startLeft = 0;
+    let isPaused = false;
+
+    const resetLoop = () => {
+        const halfWidth = stackScroll.scrollWidth / 2;
+
+        if (stackScroll.scrollLeft >= halfWidth) {
+            stackScroll.scrollLeft -= halfWidth;
+        }
+
+        if (stackScroll.scrollLeft < 0) {
+            stackScroll.scrollLeft += halfWidth;
         }
     };
-    
-    const handleStart = (e) => {
-        isScrolling = true;
-        startPos = e.type.includes('touch') ? e.touches[0].clientX : e.pageX;
-        scrollPos = stackScroll.scrollLeft;
+
+    const autoScroll = () => {
+        if (!prefersReducedMotion && !isPaused && !isPointerDown) {
+            stackScroll.scrollLeft += 0.5;
+            resetLoop();
+        }
+
+        window.requestAnimationFrame(autoScroll);
     };
-    
-    const handleMove = (e) => {
-        if (!isScrolling) return;
-        const currentPos = e.type.includes('touch') ? e.touches[0].clientX : e.pageX;
-        stackScroll.scrollLeft = scrollPos - (currentPos - startPos);
-        resetPosition();
-    };
-    
-    const handleEnd = () => {
-        isScrolling = false;
-    };
-    
-    stackScroll.addEventListener('mousedown', handleStart);
-    stackScroll.addEventListener('touchstart', handleStart);
-    
-    document.addEventListener('mousemove', handleMove);
-    document.addEventListener('touchmove', handleMove);
-    
-    document.addEventListener('mouseup', handleEnd);
-    document.addEventListener('touchend', handleEnd);
+
+    stackScroll.addEventListener('pointerdown', (event) => {
+        isPointerDown = true;
+        isPaused = true;
+        startX = event.clientX;
+        startLeft = stackScroll.scrollLeft;
+        stackScroll.setPointerCapture(event.pointerId);
+    });
+
+    stackScroll.addEventListener('pointermove', (event) => {
+        if (!isPointerDown) {
+            return;
+        }
+
+        stackScroll.scrollLeft = startLeft - (event.clientX - startX);
+        resetLoop();
+    });
+
+    stackScroll.addEventListener('pointerup', (event) => {
+        isPointerDown = false;
+        isPaused = false;
+        stackScroll.releasePointerCapture(event.pointerId);
+    });
+
+    stackScroll.addEventListener('pointercancel', () => {
+        isPointerDown = false;
+        isPaused = false;
+    });
+
+    stackScroll.addEventListener('mouseenter', () => {
+        isPaused = true;
+    });
+
+    stackScroll.addEventListener('mouseleave', () => {
+        if (!isPointerDown) {
+            isPaused = false;
+        }
+    });
+
+    stackScroll.addEventListener('focusin', () => {
+        isPaused = true;
+    });
+
+    stackScroll.addEventListener('focusout', () => {
+        if (!isPointerDown) {
+            isPaused = false;
+        }
+    });
+
+    autoScroll();
 }
 
