@@ -336,12 +336,10 @@ h2 {
     gap: 0.75rem;
 }
 
-.project-status-wrap {
+.project-status-badge {
     display: inline-flex;
-}
-
-.project-status {
-    appearance: none;
+    align-items: center;
+    justify-content: center;
     border-radius: 999rem;
     border: 0.0625rem solid hsl(152 76% 45% / 42%);
     background:
@@ -351,26 +349,14 @@ h2 {
     font-size: 0.85rem;
     line-height: 1;
     padding-block: 0.55rem;
-    padding-inline: 0.8rem 1.9rem;
-    cursor: pointer;
-    background-image:
-        linear-gradient(180deg, hsl(152 72% 44% / 25%), hsl(152 72% 44% / 12%)),
-        linear-gradient(45deg, transparent 50%, hsl(152 88% 82%) 50%),
-        linear-gradient(135deg, hsl(152 88% 82%) 50%, transparent 50%);
-    background-position:
-        0 0,
-        calc(100% - 0.95rem) 50%,
-        calc(100% - 0.65rem) 50%;
-    background-size:
-        auto,
-        0.34rem 0.34rem,
-        0.34rem 0.34rem;
-    background-repeat: no-repeat;
+    padding-inline: 0.9rem;
+    min-inline-size: 7.75rem;
 }
 
-.project-status:focus-visible {
-    outline: 0.125rem solid var(--focus-ring);
-    outline-offset: 0.12rem;
+.project-card[data-status="in-progress"] .project-status-badge {
+    border-color: hsl(43 92% 52% / 44%);
+    background: linear-gradient(180deg, hsl(43 92% 52% / 26%), hsl(43 92% 52% / 12%));
+    color: hsl(48 96% 82%);
 }
 
 .project-card h3 {
